@@ -502,14 +502,17 @@ function tick(time) {
 
 //creates a navigation list for navigating to different images
 function showNavigation() {
-  const NUM_DATASETS = 2;
-  const navList = document.createElement("ul");
+  let imageNames = [
+    "Sage's Living Room",
+    "Sage's Living Room 2"
+  ];
+  let navList = document.createElement("ul");
   let listText;
 
   //add a new list element for each dataset 
-  for(i = 0; i < NUM_DATASETS; i++) {
+  for(i = 0; i < imageNames.length; i++) {
     let listElement = document.createElement("li")
-    listText = document.createTextNode(i);
+    listText = document.createTextNode(imageNames[i]);
     listLink = document.createElement('a');
     listLink.appendChild(listText);
     listLink.href = "/?i=" + (i+1); //url for image
@@ -540,8 +543,6 @@ function initFromParameters() {
   setViewSize(0);
   miniMode(0);
 }
-
-
 
 initFromParameters();
 addHandlers();
