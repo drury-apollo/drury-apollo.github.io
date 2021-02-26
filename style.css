@@ -1,0 +1,197 @@
+body {
+    user-select: none;
+    -webkit-user-select: none;
+    font-family: Helvetica, "Helvetica Neue", sans-serif;
+    font-size: 18px;
+    line-height: 1.3em;
+    background: #eee;
+    padding: 20px;
+    margin: 0;
+}
+
+svg {
+    display: none;
+}
+
+.ts {
+    padding-right: 1px;
+}
+
+#error {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    background: #444;
+    padding: 8px;
+    white-space: pre;
+    color: #fff;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+/* The main MPI view */
+.view {
+    position: absolute;
+    border: 3px solid #000;
+    overflow: hidden;
+    transform-origin: top left;
+}
+
+.view[nav="0"] {
+    cursor: crosshair;
+}
+
+.view[nav="1"] {
+    cursor: grab;
+}
+
+.viewspace[size="0"] .view {
+    transform: scale(0.5625);
+}
+
+.viewspace[size="0"] div.whole {
+    display: none;
+}
+
+.viewspace[size="1"] div.half {
+    display: none;
+}
+
+.mpi,
+.view {
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+}
+
+.mpi * {
+    position: absolute;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Button styling */
+.minis a,
+.controls a {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    line-height: 30px;
+    cursor: pointer;
+    background: #ccc;
+    color: #333;
+}
+
+#minimodes,
+#backgroundmodes,
+#behindmodes,
+#frontmodes {
+    display: inline-block;
+}
+
+a:active {
+    background: #000;
+    color: #fff;
+}
+
+a.on {
+    color: #fff;
+    background: #444;
+}
+
+/* Layer thumbnails ("minis"). */
+.minis .group {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.minis .row {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid black;
+    margin: 0 4px 4px 0;
+}
+
+.minis[selected="0"] .row:hover,
+.minis .row[selected] {
+    border-color: red;
+}
+
+.minis .row:active {
+    border-color: white !important;
+}
+
+.minis .thumb {
+    display: inline-block;
+    background-size: 100% 100%;
+    vertical-align: top;
+}
+
+.minis .num {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 1px 3px 1px 2px;
+    background: #444;
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+
+.minis .row[selected] .num {
+    background: #d00;
+}
+
+body[mode="0"] .thumb,
+body[mode="0"] .img.selected {
+    filter: none !important;
+}
+
+body[mode="1"] .thumb {
+    filter: url(#alpha) !important;
+}
+
+body[mode="1"] .img.selected {
+    filter: url(#white) !important;
+}
+
+body[background="0"] .view {
+    background: #000;
+}
+
+body[background="1"] .view {
+    background: #888;
+}
+
+body[background="2"] .view {
+    background: #fff;
+}
+
+body[under="0"] .img.under {
+    visibility: hidden;
+}
+
+body .img.mid {
+    visibility: hidden;
+}
+
+body[over="0"] .img.over {
+    visibility: hidden;
+}
+
+body[over="2"] .img.over {
+    filter: url(#black) !important;
+}
+
+body[over="3"] .img.over {
+    filter: url(#white) !important;
+}

@@ -1,0 +1,56 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>Viewer</title>
+<link rel="stylesheet" href="style.css">
+
+<body mode="0" under="0" over="0" background="1">
+	<div id=error></div>
+	<svg class=svgdefs xmlns="http://www.w3.org/2000/svg">
+		<defs>
+			<filter id=alpha>
+				<feColorMatrix type=matrix values="0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 1" />
+			</filter>
+			<filter id=white>
+				<feColorMatrix type=matrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
+			</filter>
+			<filter id=black>
+				<feColorMatrix type=matrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" />
+			</filter>
+		</defs>
+		<defs class=filters></defs>
+	</svg>
+	<h1>Viewer</h1>
+	<div class=viewspace></div>
+
+View controls 
+<br>
+<div class=controls>
+Movement mode<span class=ts></span>: <span id=movemode>
+<a onclick="setMoveMode(0)" class=on>hover</a>
+<a onclick="setMoveMode(1)">drag</a>
+<a onclick="setMoveMode(2)">sway</a>
+<a onclick="setMoveMode(3)">wander</a>
+</span>
+<br>
+<!--View mode<span class=ts></span>: <span id=viewmode>
+<a onclick="showDepth(0)" class=on>normal</a>
+<a onclick="showDepth(1)">depth 1</a>
+<a onclick="showDepth(2)">depth 2</a>-->
+</span>
+<br>
+Size<span class=ts></span>: <span id=viewsize>
+<a onclick="setViewSize(0)">512<span class=ts></span>×<span class=ts></span>288</a>
+<a onclick="setViewSize(1)" class=on>910<span class=ts></span>×<span class=ts></span>512</a>
+</span>
+</div>
+
+<!-- Individual layers -->
+<div class=minis selected=0><h2>Layers</h2>
+<!--<div id=minimodes>Show<span class=ts></span>:
+<a onclick="miniMode(0)" class=on>Full</a>
+<a onclick="miniMode(1)">Alpha</a></div>
+<br><br>-->
+</div>
+<script src="script.js"></script>
+</body>
+</html>
