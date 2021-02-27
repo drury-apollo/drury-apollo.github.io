@@ -428,6 +428,7 @@ function leaveRow(index) {
     showAll(index);
   }
 }
+
 // Layer thumbnails ("minis") on the right-hand side.
 
 function buildMinis(layers, width, height) {
@@ -507,20 +508,22 @@ function showNavigation() {
     "Sage's Living Room 2"
   ];
   let navList = document.createElement("ul");
-  let listText;
 
   //add a new list element for each dataset 
   for(i = 0; i < imageNames.length; i++) {
     let listElement = document.createElement("li")
-    listText = document.createTextNode(imageNames[i]);
     listLink = document.createElement('a');
-    listLink.appendChild(listText);
+    listImage = document.createElement('img');
+    listImage.src = "previews/image"+(i+1) + ".jpg";
+    listImage.alt = imageNames[i];
+    listImage.id = "previewImage";
+    listLink.appendChild(listImage);
     listLink.href = "/?i=" + (i+1); //url for image
     listElement.appendChild(listLink);
     navList.appendChild(listElement);
   }
   
-  var navElement = document.getElementById("navigation");
+  let navElement = document.getElementById("navigation");
   navElement.appendChild(navList);
 }
 
@@ -542,6 +545,8 @@ function initFromParameters() {
   showDepth(0);
   setViewSize(0);
   miniMode(0);
+
+
 }
 
 initFromParameters();
