@@ -195,3 +195,13 @@ body[over="2"] .img.over {
 body[over="3"] .img.over {
     filter: url(#white) !important;
 }
+
+#previewImage {
+    width:  5em;
+    height: auto;
+    border: 1px solid black;
+}
+
+#previewImage:hover {
+    border-color: red;
+}

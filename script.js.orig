@@ -428,7 +428,10 @@ function leaveRow(index) {
     showAll(index);
   }
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> change-dataset
 // Layer thumbnails ("minis") on the right-hand side.
 
 function buildMinis(layers, width, height) {
@@ -501,6 +504,12 @@ function tick(time) {
 
 }
 
+<<<<<<< HEAD
+
+function initFromParameters() {
+  const params = new URL(window.location).searchParams;
+  const layerzero = 'mpi/' + parseInt(params.get('i')) + '/rgba_$$.png';
+=======
 //creates a navigation list for navigating to different images
 function showNavigation() {
   let imageNames = [
@@ -530,6 +539,7 @@ function showNavigation() {
 function initFromParameters() {
   const params = new URL(window.location).searchParams;
   const layerzero = 'mpi'+ parseInt(params.get('i')) + '/' + parseInt(params.get('i')) + '/rgba_$$.png';
+>>>>>>> change-dataset
 
   const num_layers = 32;
   const width = 910;
@@ -545,11 +555,15 @@ function initFromParameters() {
   showDepth(0);
   setViewSize(0);
   miniMode(0);
-
-
+<<<<<<< HEAD
 }
 
 
+=======
+
+
+}
+>>>>>>> change-dataset
 
 initFromParameters();
 addHandlers();
