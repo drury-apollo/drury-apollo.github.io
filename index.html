@@ -26,7 +26,10 @@
 		</defs>
 		<defs class=filters></defs>
 	</svg>
-	<h1>MPI Viewer</h1>
+	<div class=headers-div>
+		<h1 class=headers data-title="MPI Viewer">MPI Viewer</h1>
+	</div>
+
 	<div class=viewspace></div>
 
 	View controls
@@ -44,13 +47,14 @@
 <a onclick="showDepth(1)">depth 1</a>
 <a onclick="showDepth(2)">depth 2</a>-->
 		</span>
-		<br>
+
 		Size<span class=ts></span>: <span id=viewsize>
 			<a onclick="setViewSize(0)">512<span class=ts></span>×<span class=ts></span>288</a>
 			<a onclick="setViewSize(1)" class=on>910<span class=ts></span>×<span class=ts></span>512</a>
 		</span>
 	</div>
 
+	<br>
 	<!-- Individual layers -->
 	<div class=minis selected=0>
 		<h2>Layers</h2>
