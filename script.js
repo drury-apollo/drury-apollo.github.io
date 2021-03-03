@@ -529,7 +529,7 @@ function showNavigation() {
 
 function initFromParameters() {
   const params = new URL(window.location).searchParams;
-  const layerzero = 'mpi'+ parseInt(params.get('i')) + '/' + parseInt(params.get('i')) + '/rgba_$$.png';
+  const layerzero = 'mpi/' + parseInt(params.get('i')) + '/rgba_$$.png';
 
   const num_layers = 32;
   const width = 910;

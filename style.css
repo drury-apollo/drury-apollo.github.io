@@ -328,6 +328,7 @@ body[over="3"] .img.over {
     width:  5em;
     height: auto;
     border: 1px solid black;
+    margin: .5em;
 }
 
 #previewImage:hover {
