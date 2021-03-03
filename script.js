@@ -428,6 +428,7 @@ function leaveRow(index) {
     showAll(index);
   }
 }
+
 // Layer thumbnails ("minis") on the right-hand side.
 
 function buildMinis(layers, width, height) {
@@ -500,10 +501,35 @@ function tick(time) {
 
 }
 
+//creates a navigation list for navigating to different images
+function showNavigation() {
+  let imageNames = [
+    "Sage's Living Room",
+    "Sage's Living Room 2"
+  ];
+  let navList = document.createElement("ul");
+
+  //add a new list element for each dataset 
+  for(i = 0; i < imageNames.length; i++) {
+    let listElement = document.createElement("li")
+    listLink = document.createElement('a');
+    listImage = document.createElement('img');
+    listImage.src = "previews/image"+(i+1) + ".jpg";
+    listImage.alt = imageNames[i];
+    listImage.id = "previewImage";
+    listLink.appendChild(listImage);
+    listLink.href = "/?i=" + (i+1); //url for image
+    listElement.appendChild(listLink);
+    navList.appendChild(listElement);
+  }
+  
+  let navElement = document.getElementById("navigation");
+  navElement.appendChild(navList);
+}
 
 function initFromParameters() {
   const params = new URL(window.location).searchParams;
-  const layerzero = 'mpi/' + parseInt(params.get('i')) + '/rgba_$$.png';
+  const layerzero = 'mpi'+ parseInt(params.get('i')) + '/' + parseInt(params.get('i')) + '/rgba_$$.png';
 
   const num_layers = 32;
   const width = 910;
@@ -519,10 +545,13 @@ function initFromParameters() {
   showDepth(0);
   setViewSize(0);
   miniMode(0);
+
+
 }
 
 
 
 initFromParameters();
 addHandlers();
+showNavigation();
 tick();
