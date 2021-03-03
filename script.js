@@ -341,6 +341,7 @@ function setViewSize(s) {
   updateButtons('viewsize', s);
   viewSpace = document.querySelector('.viewspace');
   viewSpace.setAttribute('size', s);
+  document.getElementById("viewcontrols").style.marginTop = s === 0 ? "288px": "512px";
 }
 
 
@@ -517,6 +518,7 @@ function showNavigation() {
     listImage.src = "previews/image"+(i+1) + ".jpg";
     listImage.alt = imageNames[i];
     listImage.id = "previewImage";
+    listImage.className = "img-thumbnail";
     listLink.appendChild(listImage);
     listLink.href = "/?i=" + (i+1); //url for image
     listElement.appendChild(listLink);

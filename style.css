@@ -216,6 +216,10 @@ svg {
     color: #333;
 }
 
+.controls {
+    margin-top: 512px;
+}
+
 #minimodes,
 #backgroundmodes,
 #behindmodes,
