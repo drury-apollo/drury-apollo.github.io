@@ -349,35 +349,25 @@ function setViewSize(s) {
 
 function setGrid(s) {
     
-  //width = 910
-  //height = 512
-  
-  width = 512;
-  height = 288;
-  half = document.getElementById('half');
-  whole = document.getElementById('whole');
-  
+  width = 910
+  height = 512
     
   updateButtons('gridcontrols', s);
   viewSpace = document.querySelector('.viewspace');
   const grid = create('div', 'grid');
   grid.setAttribute('id', 'grid');
+    
   const query = window.location.search;
   const param = new URLSearchParams(query);
   const mpiid = param.get('i');
+    
   gridImage = document.createElement('img');
   gridImage.src = "mpi/"+ mpiid + "/grid.png";
-    
   setDims(gridImage, width, height);
-    
   grid.appendChild(gridImage);
     
-  //setDims(half, 0, height * 0.5625);
-  //setDims(whole, 0, height);
-  //setDims(gridImage, width, height);
-    
   if (s == 0 && document.getElementById('grid')) {viewSpace.removeChild(document.getElementById('grid'));}
-  else if (s == 1) {viewSpace.appendChild(grid);}
+  else if (s == 1 && !document.getElementById('grid')) {viewSpace.appendChild(grid);}
 }
 
 // Depth control
