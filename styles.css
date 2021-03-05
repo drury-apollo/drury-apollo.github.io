@@ -192,6 +192,13 @@ svg {
     cursor: grab;
 }
 
+.grid {
+    position: absolute;
+    top: 327px;
+    left 0px;
+    pointer-events: none;
+}
+
 .viewspace-controls {
   display: flex;
   justify-content: center;     
