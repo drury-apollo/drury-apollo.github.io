@@ -134,7 +134,7 @@ function digits(i, min) {
   }
 }
 
-function loadScene(layerzero, num_layers, width, height, near, far, fov) {
+function loadScene(layerzero, num_layers, width, height, near, far, fov, mode) {
   const focal_length_px = 0.5 * width / Math.tan(fov / 2 * Math.PI / 180);
   // Near and far are in metres. ppm = pixels per metre.
   const ppm = 3600;
@@ -183,8 +183,11 @@ function loadScene(layerzero, num_layers, width, height, near, far, fov) {
   viewSpace.appendChild(half);
   viewSpace.appendChild(whole);
   setPose();
+    
   // Individual layers
-  buildMinis(layers, width, height);
+  if (mode == 2) {
+    buildMinis(layers, width, height);   
+  }
 }
 
 // Changing the viewpoint
@@ -347,12 +350,12 @@ function setViewSize(s) {
   document.getElementById("viewcontrols").style.marginTop = s === 0 ? "288px": "512px";
 }
 
-function setGrid(s) {
+function setGrid(mode) {
     
   width = 910
   height = 512
     
-  updateButtons('gridcontrols', s);
+  updateButtons('gridcontrols', mode);
   viewSpace = document.querySelector('.viewspace');
   const grid = create('div', 'grid');
   grid.setAttribute('id', 'grid');
@@ -366,8 +369,14 @@ function setGrid(s) {
   setDims(gridImage, width, height);
   grid.appendChild(gridImage);
     
-  if (s == 0 && document.getElementById('grid')) {viewSpace.removeChild(document.getElementById('grid'));}
-  else if (s == 1 && !document.getElementById('grid')) {viewSpace.appendChild(grid);}
+  if (mode == 0 && document.getElementById('grid')) {viewSpace.removeChild(document.getElementById('grid'));}
+  else if (mode == 1 && !document.getElementById('grid')) {viewSpace.appendChild(grid);}
+}
+
+function setDot(mode) {
+  updateButtons('dotcontrols', mode);
+  initFromParameters(mode);
+  addHandlers();
 }
 
 // Depth control
@@ -554,9 +563,15 @@ function showNavigation() {
   navElement.appendChild(navList);
 }
 
-function initFromParameters() {
+function initFromParameters(mode) {
   const params = new URL(window.location).searchParams;
-  const layerzero = 'mpi/' + parseInt(params.get('i')) + '/rgba_$$.png';
+  let layerzero = '';
+  if (mode == 1) {
+    layerzero = 'mpi/' + parseInt(params.get('i')) + '/dot/dot_mpi_rgba_$$.png';
+  }
+  else {
+    layerzero = 'mpi/' + parseInt(params.get('i')) + '/rgba_$$.png';
+  } 
 
   const num_layers = 32;
   const width = 910;
@@ -564,13 +579,14 @@ function initFromParameters() {
   const near = 1.0;
   const far = 100.0;
   const fov = 60;
-
-  loadScene(layerzero, num_layers, width, height, near, far, fov);
+    
+  loadScene(layerzero, num_layers, width, height, near, far, fov, mode);
 
   moveScale = 1.0;
   setMoveMode(0);
   showDepth(0);
   setViewSize(0);
+  setGrid(0);
   miniMode(0);
 
 
@@ -578,7 +594,7 @@ function initFromParameters() {
 
 
 
-initFromParameters();
+initFromParameters(2);
 addHandlers();
 showNavigation();
 tick();
