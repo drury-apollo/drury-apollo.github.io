@@ -377,6 +377,13 @@ function setDot(mode) {
   updateButtons('dotcontrols', mode);
   initFromParameters(mode);
   addHandlers();
+  const rows = document.querySelectorAll('.minis .row');
+  for (i = 0; i < 32; i++) {
+    if (rows[i].hasAttribute('selected')) {
+      // Clear it.
+      rows[i].removeAttribute('selected');
+    }
+  }
 }
 
 // Depth control
