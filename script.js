@@ -386,6 +386,17 @@ function setDot(mode) {
   }
 }
 
+function readText() {
+  const time = document.getElementById('time');
+  const params = new URL(window.location).searchParams;
+  let file = '';
+  file = 'mpi/' + parseInt(params.get('i')) + '/time.txt';
+  console.log(file);
+  let html = '';
+  html = ('<object data=' + file + ' type="text/plain" width="500" style="height: 25px">');
+  time.innerHTML += html;
+}
+
 // Depth control
 
 function showDepth(mode) {
@@ -595,6 +606,7 @@ function initFromParameters(mode) {
   setViewSize(0);
   setGrid(0);
   miniMode(0);
+  readText();
 
 
 }
