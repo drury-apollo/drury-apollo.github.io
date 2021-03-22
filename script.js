@@ -393,7 +393,7 @@ function readText() {
   file = 'mpi/' + parseInt(params.get('i')) + '/time.txt';
   console.log(file);
   let html = '';
-  html = ('<object data=' + file + ' type="text/plain" width="500" style="height: 25px">');
+  html = ('<object data=' + file + ' type="text/plain" width="55px" height="25px">');
   time.innerHTML += html;
 }
 
