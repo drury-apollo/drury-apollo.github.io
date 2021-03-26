@@ -179,7 +179,8 @@ svg {
 /* The main MPI view */
 .view {
     position: absolute;
-    left: 185px;
+/*    left: 185px;*/
+    left: 11em;
     border: 3px solid #000;
     overflow: hidden;
     transform-origin: top left;
@@ -195,8 +196,12 @@ svg {
 
 .grid {
     position: absolute;
+/*
     top: 326px;
     left: 185px;
+*/
+    top: 18.5em;
+    left: 11em;
     transform-origin: top left;
     pointer-events: none;
 }
@@ -207,13 +212,15 @@ svg {
 }
 
 .viewspace[size="0"] .view {
-    left: 445px;
+/*    left: 445px;*/
+    left: 25.4em;
     transform: scale(0.5625);
 }
 
 .viewspace[size="0"] .grid {
     position: absolute;
-    left: 445px;
+/*    left: 445px;*/
+    left: 25.4em;
     transform: scale(0.5625);
 }
 

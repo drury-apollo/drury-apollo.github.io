@@ -390,10 +390,10 @@ function readText() {
   const time = document.getElementById('time');
   const params = new URL(window.location).searchParams;
   let file = '';
-  file = 'mpi/' + parseInt(params.get('i')) + '/time.txt';
-  console.log(file);
+  file = 'mpi/' + parseInt(params.get('i')) + '/timeTEST.html';
   let html = '';
-  html = ('<object data=' + file + ' type="text/plain" width="55px" height="25px">');
+//  html = ('<iframe src=' + file + ' type="text/plain" width="44em" height="19em" scrolling="no" style="border:none"></iframe>');
+  html = ('<iframe src=' + file + ' type="text/plain" width="60em" height="19em" scrolling="no" style="border:none"></iframe>');
   time.innerHTML += html;
 }
 
@@ -606,8 +606,9 @@ function initFromParameters(mode) {
   setViewSize(0);
   setGrid(0);
   miniMode(0);
-  readText();
-
+  if (mode == 2) {
+      readText();
+  };
 
 }
 
