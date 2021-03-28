@@ -390,9 +390,8 @@ function readText() {
   const time = document.getElementById('time');
   const params = new URL(window.location).searchParams;
   let file = '';
-  file = 'mpi/' + parseInt(params.get('i')) + '/timeTEST.html';
+  file = 'mpi/' + parseInt(params.get('i')) + '/time.html';
   let html = '';
-//  html = ('<iframe src=' + file + ' type="text/plain" width="44em" height="19em" scrolling="no" style="border:none"></iframe>');
   html = ('<iframe src=' + file + ' type="text/plain" width="60em" height="19em" scrolling="no" style="border:none"></iframe>');
   time.innerHTML += html;
 }
@@ -558,7 +557,11 @@ function tick(time) {
 function showNavigation() {
   let imageNames = [
     "Sage's Living Room",
-    "Sage's Living Room 2"
+    "Bathroom Mirror",
+    "Mirror Flash",
+    "Window",
+    "Box",
+    "Glass Table"
   ];
   let navList = document.createElement("ul");
 
