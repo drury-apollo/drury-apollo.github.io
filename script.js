@@ -396,6 +396,26 @@ function readText() {
   time.innerHTML += html;
 }
 
+function showDesc() {
+  // update these
+  let descriptions = [
+    "Works well along horizontal and vertical axes. Reflections stay in appropriate layers. A hole in the depth map exists on the back wall.",  // living room
+    "Works best along horizontal axis. Objects in mirror are correctly placed farther away. There are some small holes in the depth map throughout.",  // bathroom mirror
+    "Works best along horizontal axis. Objects in mirror are correctly placed farther away. The light source moves correctly according to the reflections. No notable holes in the depth map.", // mirror flash
+    "Works best along horizontal axis. Objects in reflection are correctly placed farther away. There are several large holes in the depth map throughout that make vertical motion look strange.",   // window
+    "Works well along horizontal and vertical axes. Several objects are placed too close, such as the bottom of the door and the edge of the countertop. There are several large holes in the depth map throughout.", // entryway
+    "Works best along horizontal axis. Glasses are too thin to retain their shape. Reflections on the glass cup are slightly warped. The back cabinet is incorrectly placed closer in the scene since it is reflected in the table."  // reflective table
+  ];
+  
+  const query = window.location.search;
+  const param = new URLSearchParams(query);
+  const mpiid = param.get('i') - 1;
+  
+  let desc = document.getElementById('desc');
+    
+  desc.append(descriptions[mpiid]);
+}
+
 // Depth control
 
 function showDepth(mode) {
@@ -556,12 +576,12 @@ function tick(time) {
 //creates a navigation list for navigating to different images
 function showNavigation() {
   let imageNames = [
-    "Sage's Living Room",
+    "Living Room",
     "Bathroom Mirror",
     "Mirror Flash",
     "Window",
-    "Box",
-    "Glass Table"
+    "Entryway",
+    "Reflective Table"
   ];
   let navList = document.createElement("ul");
 
@@ -570,12 +590,15 @@ function showNavigation() {
     let listElement = document.createElement("li")
     listLink = document.createElement('a');
     listImage = document.createElement('img');
+    listDesc = document.createElement('div');
     listImage.src = "previews/image"+(i+1) + ".jpg";
     listImage.alt = imageNames[i];
     listImage.id = "previewImage";
     listImage.className = "img-thumbnail";
+    listDesc.append(imageNames[i]);
     listLink.appendChild(listImage);
     listLink.href = "/?i=" + (i+1); //url for image
+    listElement.appendChild(listDesc);
     listElement.appendChild(listLink);
     navList.appendChild(listElement);
   }
@@ -611,6 +634,7 @@ function initFromParameters(mode) {
   miniMode(0);
   if (mode == 2) {
       readText();
+      showDesc();
   };
 
 }
