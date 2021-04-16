@@ -134,7 +134,7 @@ function digits(i, min) {
   }
 }
 
-function loadScene(layerzero, num_layers, width, height, near, far, fov) {
+function loadScene(layerzero, num_layers, width, height, near, far, fov, mode) {
   const focal_length_px = 0.5 * width / Math.tan(fov / 2 * Math.PI / 180);
   // Near and far are in metres. ppm = pixels per metre.
   const ppm = 3600;
@@ -169,10 +169,13 @@ function loadScene(layerzero, num_layers, width, height, near, far, fov) {
   view.innerHTML = '';
   view.appendChild(mpi);
   view.style.perspective = px(focal_length_px);
+  view.setAttribute('id', 'view');
   pose.offset = 1.5 * ppm;
   const viewSpace = document.querySelector('.viewspace');
   const half = create('div', 'half');
+  half.setAttribute('id', 'half');
   const whole = create('div', 'whole');
+  whole.setAttribute('id', 'whole')
   setDims(half, 0, height * 0.5625);
   setDims(whole, 0, height);
   viewSpace.innerHTML = '';
@@ -180,8 +183,11 @@ function loadScene(layerzero, num_layers, width, height, near, far, fov) {
   viewSpace.appendChild(half);
   viewSpace.appendChild(whole);
   setPose();
+    
   // Individual layers
-  buildMinis(layers, width, height);
+  if (mode == 2) {
+    buildMinis(layers, width, height);   
+  }
 }
 
 // Changing the viewpoint
@@ -341,8 +347,74 @@ function setViewSize(s) {
   updateButtons('viewsize', s);
   viewSpace = document.querySelector('.viewspace');
   viewSpace.setAttribute('size', s);
+  document.getElementById("viewcontrols").style.marginTop = s === 0 ? "288px": "512px";
 }
 
+function setGrid(mode) {
+    
+  width = 910
+  height = 512
+    
+  updateButtons('gridcontrols', mode);
+  viewSpace = document.querySelector('.viewspace');
+  const grid = create('div', 'grid');
+  grid.setAttribute('id', 'grid');
+    
+  const query = window.location.search;
+  const param = new URLSearchParams(query);
+  const mpiid = param.get('i');
+    
+  gridImage = document.createElement('img');
+  gridImage.src = "mpi/"+ mpiid + "/grid.png";
+  setDims(gridImage, width, height);
+  grid.appendChild(gridImage);
+    
+  if (mode == 0 && document.getElementById('grid')) {viewSpace.removeChild(document.getElementById('grid'));}
+  else if (mode == 1 && !document.getElementById('grid')) {viewSpace.appendChild(grid);}
+}
+
+function setDot(mode) {
+  updateButtons('dotcontrols', mode);
+  initFromParameters(mode);
+  addHandlers();
+  const rows = document.querySelectorAll('.minis .row');
+  for (i = 0; i < 32; i++) {
+    if (rows[i].hasAttribute('selected')) {
+      // Clear it.
+      rows[i].removeAttribute('selected');
+    }
+  }
+}
+
+function readText() {
+  const time = document.getElementById('time');
+  const params = new URL(window.location).searchParams;
+  let file = '';
+  file = 'mpi/' + parseInt(params.get('i')) + '/time.html';
+  let html = '';
+  html = ('<iframe src=' + file + ' type="text/plain" width="60em" height="19em" scrolling="no" style="border:none"></iframe>');
+  time.innerHTML += html;
+}
+
+function showDesc() {
+  // update these
+  let descriptions = [
+    "Works well along horizontal and vertical axes. Reflections stay in appropriate layers. A hole in the depth map exists on the back wall.",  // living room
+    "Works best along horizontal axis. Objects in mirror are correctly placed farther away. There are some small holes in the depth map throughout.",  // bathroom mirror
+    "Works best along horizontal axis. Objects in mirror are correctly placed farther away. The light source moves correctly according to the reflections. No notable holes in the depth map.", // mirror flash
+    "Works best along horizontal axis. Objects in reflection are correctly placed farther away. There are several large holes in the depth map throughout that make vertical motion look strange.",   // window
+    "Works well along horizontal and vertical axes. Several objects are placed too close, such as the bottom of the door and the edge of the countertop. There are several large holes in the depth map throughout.", // entryway
+    "Works best along horizontal axis. Glasses are too thin to retain their shape. Reflections on the glass cup are slightly warped. The back cabinet is incorrectly placed closer in the scene since it is reflected in the table."  // reflective table
+  ];
+  
+  const query = window.location.search;
+  const param = new URLSearchParams(query);
+  const mpiid = param.get('i') - 1;
+  
+  let desc = document.getElementById('desc');
+    
+  desc.append(descriptions[mpiid]);
+}
 
 // Depth control
 
@@ -504,8 +576,12 @@ function tick(time) {
 //creates a navigation list for navigating to different images
 function showNavigation() {
   let imageNames = [
-    "Sage's Living Room",
-    "Sage's Living Room 2"
+    "Living Room",
+    "Bathroom Mirror",
+    "Mirror Flash",
+    "Window",
+    "Entryway",
+    "Reflective Table"
   ];
   let navList = document.createElement("ul");
 
@@ -514,11 +590,15 @@ function showNavigation() {
     let listElement = document.createElement("li")
     listLink = document.createElement('a');
     listImage = document.createElement('img');
+    listDesc = document.createElement('div');
     listImage.src = "previews/image"+(i+1) + ".jpg";
     listImage.alt = imageNames[i];
     listImage.id = "previewImage";
+    listImage.className = "img-thumbnail";
+    listDesc.append(imageNames[i]);
     listLink.appendChild(listImage);
     listLink.href = "/?i=" + (i+1); //url for image
+    listElement.appendChild(listDesc);
     listElement.appendChild(listLink);
     navList.appendChild(listElement);
   }
@@ -527,9 +607,15 @@ function showNavigation() {
   navElement.appendChild(navList);
 }
 
-function initFromParameters() {
+function initFromParameters(mode) {
   const params = new URL(window.location).searchParams;
-  const layerzero = 'mpi'+ parseInt(params.get('i')) + '/' + parseInt(params.get('i')) + '/rgba_$$.png';
+  let layerzero = '';
+  if (mode == 1) {
+    layerzero = 'mpi/' + parseInt(params.get('i')) + '/dot/dot_mpi_rgba_$$.png';
+  }
+  else {
+    layerzero = 'mpi/' + parseInt(params.get('i')) + '/rgba_$$.png';
+  } 
 
   const num_layers = 32;
   const width = 910;
@@ -537,21 +623,25 @@ function initFromParameters() {
   const near = 1.0;
   const far = 100.0;
   const fov = 60;
-
-  loadScene(layerzero, num_layers, width, height, near, far, fov);
+    
+  loadScene(layerzero, num_layers, width, height, near, far, fov, mode);
 
   moveScale = 1.0;
   setMoveMode(0);
   showDepth(0);
   setViewSize(0);
+  setGrid(0);
   miniMode(0);
-
+  if (mode == 2) {
+      readText();
+      showDesc();
+  };
 
 }
 
 
 
-initFromParameters();
+initFromParameters(2);
 addHandlers();
 showNavigation();
 tick();

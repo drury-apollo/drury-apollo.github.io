@@ -1,9 +1,18 @@
 <!doctype html>
 <meta charset=utf-8>
-<title>Viewer</title>
-<link rel="stylesheet" href="style.css">
+
+<head>
+	<title>Viewer</title>
+	<link rel="stylesheet" href="styles.css">
+	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+	
+</head>
+
+
 
 <body mode="0" under="0" over="0" background="1">
+	<div class = "content">
 	<div id=error></div>
 	<svg class=svgdefs xmlns="http://www.w3.org/2000/svg">
 		<defs>
@@ -20,41 +29,105 @@
 		<defs class=filters></defs>
 	</svg>
 
+	<div class=headers-div>
+		<h1 class=headers data-title="MPI Viewer">MPI Viewer</h1>
+	</div>
+    Image Navigation
+    <div style='display: flex'>
+        
+        <div id = navigation></div>
 
-Image Navigation
-<div id = navigation></div>
+        <div class = "viewspace-controls">
 
-<h1>Viewer</h1>
-<div class=viewspace></div>
-<br>
-View controls 
-<br>
-<div class=controls>
-Movement mode<span class=ts></span>: <span id=movemode>
-<a onclick="setMoveMode(0)" class=on>hover</a>
-<a onclick="setMoveMode(1)">drag</a>
-<a onclick="setMoveMode(2)">sway</a>
-<a onclick="setMoveMode(3)">wander</a>
-</span>
-<br>
-View mode<span class=ts></span>: <span id=viewmode>
-<a onclick="showDepth(0)" class=on>normal</a>
-<a onclick="showDepth(1)">depth 1</a>
-<a onclick="showDepth(2)">depth 2</a>
-</span>
-<br>
-Size<span class=ts></span>: <span id=viewsize>
-<a onclick="setViewSize(0)">512<span class=ts></span>×<span class=ts></span>288</a>
-<a onclick="setViewSize(1)" class=on>910<span class=ts></span>×<span class=ts></span>512</a>
-</span>
-</div>
+        <div class=viewspace></div>
 
-<!-- Individual layers -->
-<div class=minis selected=0><h2>Layers</h2>
-<div id=minimodes>Show<span class=ts></span>:
-<a onclick="miniMode(0)" class=on>Full</a>
-<a onclick="miniMode(1)">Alpha</a></div>
-<br><br>
-<script src="script.js"></script>
+        <div id = "viewcontrols">
+        
+            View controls
+            <br>
+            <div class=controls>
+                Movement mode<span class=ts></span>: <span id=movemode>
+                    <a onclick="setMoveMode(0)" class=on id="viewcontroller">hover</a>
+                    <a onclick="setMoveMode(1)" id="viewcontroller">drag</a>
+                    <a onclick="setMoveMode(2)" id="viewcontroller">sway</a>
+                    <a onclick="setMoveMode(3)" id="viewcontroller">wander</a>
+                </span>
+                <br>
+                View mode<span class=ts></span>: <span id=viewmode>
+                <a onclick="showDepth(0)" class=on id="viewcontroller">normal</a>
+                <a onclick="showDepth(1)" id="viewcontroller">depth 1</a>
+                <a onclick="showDepth(2)" id="viewcontroller">depth 2</a>
+                </span>
+                <br>
+                Size<span class=ts></span>: <span id=viewsize>
+                    <a onclick="setViewSize(0)" id="viewcontroller">512<span class=ts></span>×<span class=ts></span>288</a>
+                    <a onclick="setViewSize(1)" class=on id="viewcontroller">910<span class=ts></span>×<span class=ts></span>512</a>
+                </span>
+                <br>
+                Static grid<span class=ts></span>: <span id=gridcontrols>
+                    <a onclick="setGrid(0)" class=on id="viewcontroller">off</a>
+                    <a onclick="setGrid(1)" id="viewcontroller">on</a>
+                </span>
+                <br>
+                Dynamic grid<span class=ts></span>: <span id=dotcontrols>
+                    <a onclick="setDot(0)" class=on id="viewcontroller">off</a>
+                    <a onclick="setDot(1)" id="viewcontroller">on</a>
+                </span>
+                <br>
+                Scene rendered in <span id=time class=ts></span>
+                <br>
+                Description: <span id=desc class=ts></span>
+            </div>
+        </div>
+        </div>
+        
+    </div>
+        
+	<br>
+	<!-- Individual layers -->
+	<div class=minis selected=0>
+		<h2>Layers</h2>
+		<div id=minimodes>Show<span class=ts></span>:
+		<a onclick="miniMode(0)" class=on id="viewcontroller">Full</a>
+		<a onclick="miniMode(1)" id="viewcontroller">Alpha</a></div>
+		<br><br>
+	</div>
+	</div>
+	<footer class="site-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-8">
+					<h6>About</h6>
+					<p class="text-justify">This viewer uses and composites MPIs (Multiplane Images) to create an
+						immersive view. After taking pictures with our own Raspberry Pi camera rig, we use an algorithm
+						to output 32 images with varying depths, which will be put together to provide an immersive
+						viewing experience.</p>
+				</div>
+
+
+
+				<div class="col-xs-6 col-md-3">
+					<h6>Team Apollo</h6>
+					<ul class="footer-links">
+						<li><a href="#">About Us</a></li>
+						<li><a href="https://github.com/drury-apollo/MPI_Viewer">Github Repo</a></li>
+					</ul>
+				</div>
+			</div>
+			<hr>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-sm-6 col-xs-12">
+					<p class="copyright-text">Made by Team Apollo - Drury Math & Computer Science Department
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script src="script.js"></script>
+
 </body>
+
 </html>
