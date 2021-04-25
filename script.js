@@ -350,6 +350,7 @@ function setViewSize(s) {
   document.getElementById("viewcontrols").style.marginTop = s === 0 ? "288px": "512px";
 }
 
+// static grid
 function setGrid(mode) {
     
   width = 910
@@ -365,7 +366,15 @@ function setGrid(mode) {
   const mpiid = param.get('i');
     
   gridImage = document.createElement('img');
-  gridImage.src = "mpi/"+ mpiid + "/grid.png";
+
+  if (mpiid == null) {
+    gridImage.src = "mpi/1/grid.png";
+  }
+  else {
+    gridImage.src = "mpi/"+ mpiid + "/grid.png";
+  }
+
+  
   setDims(gridImage, width, height);
   grid.appendChild(gridImage);
     
@@ -373,6 +382,7 @@ function setGrid(mode) {
   else if (mode == 1 && !document.getElementById('grid')) {viewSpace.appendChild(grid);}
 }
 
+// dynamic grid
 function setDot(mode) {
   updateButtons('dotcontrols', mode);
   initFromParameters(mode);
@@ -390,14 +400,20 @@ function readText() {
   const time = document.getElementById('time');
   const params = new URL(window.location).searchParams;
   let file = '';
-  file = 'mpi/' + parseInt(params.get('i')) + '/time.html';
+  let query = parseInt(params.get('i'));
+  if (query) {
+    file = 'mpi/' + parseInt(params.get('i')) + '/time.html';
+  }
+  else {
+    file = 'mpi/1/time.html';
+  }
   let html = '';
   html = ('<iframe src=' + file + ' type="text/plain" width="60em" height="19em" scrolling="no" style="border:none"></iframe>');
   time.innerHTML += html;
 }
 
+// Display a description for the current scene
 function showDesc() {
-  // update these
   let descriptions = [
     "Works well along horizontal and vertical axes. Reflections stay in appropriate layers. A hole in the depth map exists on the back wall.",  // living room
     "Works best along horizontal axis. Objects in mirror are correctly placed farther away. There are some small holes in the depth map throughout.",  // bathroom mirror
@@ -413,7 +429,12 @@ function showDesc() {
   
   let desc = document.getElementById('desc');
     
-  desc.append(descriptions[mpiid]);
+  if (mpiid == -1) {
+    desc.append(descriptions[0]);
+  }
+  else {
+    desc.append(descriptions[mpiid]);
+  }
 }
 
 // Depth control
@@ -610,11 +631,23 @@ function showNavigation() {
 function initFromParameters(mode) {
   const params = new URL(window.location).searchParams;
   let layerzero = '';
+  let query = parseInt(params.get('i'));
   if (mode == 1) {
-    layerzero = 'mpi/' + parseInt(params.get('i')) + '/dot/dot_mpi_rgba_$$.png';
+    if (query) {
+      layerzero = 'mpi/' + parseInt(params.get('i')) + '/dot/dot_mpi_rgba_$$.png';
+    }
+    else {
+        layerzero = 'mpi/1/dot/dot_mpi_rgba_$$.png';
+    } 
   }
   else {
-    layerzero = 'mpi/' + parseInt(params.get('i')) + '/rgba_$$.png';
+    if (query) {
+      layerzero = 'mpi/' + parseInt(params.get('i')) + '/rgba_$$.png';
+    }
+    else {
+        layerzero = 'mpi/1/rgba_$$.png';
+    }
+    
   } 
 
   const num_layers = 32;
@@ -637,9 +670,7 @@ function initFromParameters(mode) {
       showDesc();
   };
 
-}
-
-
+}  
 
 initFromParameters(2);
 addHandlers();
