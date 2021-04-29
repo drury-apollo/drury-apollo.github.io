@@ -9,8 +9,8 @@ The Viewer Includes:
 - Option to see depth map
 - Amount of time it originally took to render the scene
 
-You can see the viewer in action here: https://mpi-viewer.netlify.app/?i=1
+You can see the viewer in action here: https://drury-apollo.github.io/
 
 Hover your mouse over the viewer to see how the scene would look from different perspectives. 
 
-Different image scenes are mapped to url changes (```.../?i=$insert image number here$```)
+
