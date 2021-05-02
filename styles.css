@@ -216,7 +216,7 @@ svg {
 
 .viewspace[size="0"] .grid {
     position: absolute;
-    left: 26.75em;
+    left: 23.85em;
     transform: scale(0.5625);
 }
 
